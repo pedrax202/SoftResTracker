@@ -1,5 +1,6 @@
 # SoftRes Tracker
 Repaired version of SoftResTracker addon for WOTLK 3.3.5a WoW Servers
+Original credit to "HeadGrumble" on Curseforge
 
 A World of Warcraft **3.3.5a** addon for raid leaders and loot masters to collect and manage soft reservations via in-game whispers — no external website required.
 
