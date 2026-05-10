@@ -1,0 +1,186 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+
+    <!-- SoftRes Tracker — UI Template Definitions -->
+    <!-- Color scheme: deep navy / steel-blue       -->
+
+    <!-- SRTBaseFrameTemplate -->
+    <Frame name="SRTBaseFrameTemplate"
+           parent="UIParent"
+           movable="true"
+           clampedToScreen="true"
+           frameStrata="MEDIUM"
+           toplevel="true"
+           hidden="true"
+           virtual="true">
+        <Size><AbsDimension x="310" y="400"/></Size>
+        <Anchors>
+            <Anchor point="CENTER">
+                <Offset><AbsDimension x="0" y="-20"/></Offset>
+            </Anchor>
+        </Anchors>
+        <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background"
+                  edgeFile="Interface\DialogFrame\UI-DialogBox-Border"
+                  tile="true" tileSize="16" edgeSize="16">
+            <BackgroundInsets>
+                <AbsInset left="4" right="4" top="4" bottom="4"/>
+            </BackgroundInsets>
+        </Backdrop>
+    </Frame>
+
+    <!--
+        SRTButtonTemplate — steel-blue tinted.
+
+        Rules for anonymous-button safety (buttons created with nil name):
+          1. No name= on any child texture/fontstring — $parent concat crashes.
+          2. No inherits="UIPanelButtonHighlightTexture/PushedTexture/DisabledTexture"
+             — those WoW templates internally define name="$parentHighlight" etc.
+             and will crash on unnamed parents.
+          3. Define highlight/pushed/disabled inline with plain unnamed textures.
+    -->
+    <Button name="SRTButtonTemplate" virtual="true">
+        <Size><AbsDimension x="80" y="22"/></Size>
+        <Layers>
+            <Layer level="BACKGROUND">
+                <!-- Left cap — steel blue -->
+                <Texture file="Interface\Buttons\UI-Panel-Button-Up">
+                    <Size><AbsDimension x="12"/></Size>
+                    <Anchors>
+                        <Anchor point="TOPLEFT"/>
+                        <Anchor point="BOTTOMLEFT"/>
+                    </Anchors>
+                    <TexCoords left="0" right="0.09374" top="0" bottom="0.6875"/>
+                    <Color r="0.28" g="0.62" b="0.88"/>
+                </Texture>
+                <!-- Right cap -->
+                <Texture file="Interface\Buttons\UI-Panel-Button-Up">
+                    <Size><AbsDimension x="12"/></Size>
+                    <Anchors>
+                        <Anchor point="TOPRIGHT"/>
+                        <Anchor point="BOTTOMRIGHT"/>
+                    </Anchors>
+                    <TexCoords left="0.53125" right="0.625" top="0" bottom="0.6875"/>
+                    <Color r="0.28" g="0.62" b="0.88"/>
+                </Texture>
+                <!-- Middle stretch -->
+                <Texture file="Interface\Buttons\UI-Panel-Button-Up">
+                    <Anchors>
+                        <Anchor point="TOPLEFT"><Offset><AbsDimension x="12" y="0"/></Offset></Anchor>
+                        <Anchor point="BOTTOMRIGHT"><Offset><AbsDimension x="-12" y="0"/></Offset></Anchor>
+                    </Anchors>
+                    <TexCoords left="0.09375" right="0.53125" top="0" bottom="0.6875"/>
+                    <Color r="0.28" g="0.62" b="0.88"/>
+                </Texture>
+            </Layer>
+        </Layers>
+        <NormalFont style="GameFontNormalSmall"/>
+        <DisabledFont style="GameFontDisableSmall"/>
+        <HighlightFont style="GameFontHighlightSmall"/>
+        <!-- Inline highlight — no name, no $parent concat -->
+        <HighlightTexture alphaMode="ADD">
+            <Color r="1" g="1" b="1" a="0.25"/>
+        </HighlightTexture>
+        <!-- Inline pushed — just a dark overlay -->
+        <PushedTexture>
+            <Color r="0" g="0" b="0" a="0.35"/>
+        </PushedTexture>
+        <Scripts>
+            <OnLoad>self:RegisterForClicks("AnyUp")</OnLoad>
+        </Scripts>
+    </Button>
+
+    <Button name="SRTSmallButtonTemplate" inherits="SRTButtonTemplate" virtual="true">
+        <Size><AbsDimension x="50" y="18"/></Size>
+    </Button>
+
+    <!-- SRTDangerButtonTemplate — red tint -->
+    <Button name="SRTDangerButtonTemplate" inherits="SRTButtonTemplate" virtual="true">
+        <Layers>
+            <Layer level="BACKGROUND">
+                <Texture file="Interface\Buttons\UI-Panel-Button-Up">
+                    <Size><AbsDimension x="12"/></Size>
+                    <Anchors>
+                        <Anchor point="TOPLEFT"/>
+                        <Anchor point="BOTTOMLEFT"/>
+                    </Anchors>
+                    <TexCoords left="0" right="0.09374" top="0" bottom="0.6875"/>
+                    <Color r="0.80" g="0.22" b="0.22"/>
+                </Texture>
+                <Texture file="Interface\Buttons\UI-Panel-Button-Up">
+                    <Size><AbsDimension x="12"/></Size>
+                    <Anchors>
+                        <Anchor point="TOPRIGHT"/>
+                        <Anchor point="BOTTOMRIGHT"/>
+                    </Anchors>
+                    <TexCoords left="0.53125" right="0.625" top="0" bottom="0.6875"/>
+                    <Color r="0.80" g="0.22" b="0.22"/>
+                </Texture>
+                <Texture file="Interface\Buttons\UI-Panel-Button-Up">
+                    <Anchors>
+                        <Anchor point="TOPLEFT"><Offset><AbsDimension x="12" y="0"/></Offset></Anchor>
+                        <Anchor point="BOTTOMRIGHT"><Offset><AbsDimension x="-12" y="0"/></Offset></Anchor>
+                    </Anchors>
+                    <TexCoords left="0.09375" right="0.53125" top="0" bottom="0.6875"/>
+                    <Color r="0.80" g="0.22" b="0.22"/>
+                </Texture>
+            </Layer>
+        </Layers>
+    </Button>
+
+    <!-- SRTTabTemplate — flat tab with named accent underline.
+         Tabs ARE given global names in Lua so $parentAccentLine is safe here. -->
+    <Button name="SRTTabTemplate" virtual="true">
+        <Size><AbsDimension x="100" y="22"/></Size>
+        <Layers>
+            <Layer level="BACKGROUND">
+                <Texture>
+                    <Anchors>
+                        <Anchor point="TOPLEFT"><Offset><AbsDimension x="1" y="-1"/></Offset></Anchor>
+                        <Anchor point="BOTTOMRIGHT"><Offset><AbsDimension x="-1" y="1"/></Offset></Anchor>
+                    </Anchors>
+                    <Color r="0.06" g="0.11" b="0.17" a="0.95"/>
+                </Texture>
+            </Layer>
+            <Layer level="BORDER">
+                <Texture name="$parentAccentLine">
+                    <Size><AbsDimension y="2"/></Size>
+                    <Anchors>
+                        <Anchor point="BOTTOMLEFT"><Offset><AbsDimension x="2" y="0"/></Offset></Anchor>
+                        <Anchor point="BOTTOMRIGHT"><Offset><AbsDimension x="-2" y="0"/></Offset></Anchor>
+                    </Anchors>
+                    <Color r="0.20" g="0.48" b="0.72" a="0.6"/>
+                </Texture>
+            </Layer>
+        </Layers>
+        <NormalFont style="GameFontNormalSmall"/>
+        <DisabledFont style="GameFontHighlightSmall"/>
+        <HighlightFont style="GameFontHighlightSmall"/>
+        <HighlightTexture>
+            <Color r="0.22" g="0.55" b="0.80" a="0.20"/>
+        </HighlightTexture>
+        <Scripts>
+            <OnLoad>self:RegisterForClicks("AnyUp")</OnLoad>
+        </Scripts>
+    </Button>
+
+    <EditBox name="SRTEditBoxTemplate" inherits="InputBoxTemplate" autoFocus="false" virtual="true">
+        <FontString inherits="GameFontHighlight"/>
+        <Scripts>
+            <OnEscapePressed>self:ClearFocus()</OnEscapePressed>
+        </Scripts>
+    </EditBox>
+
+    <FontString name="SRTHeaderFontTemplate" inherits="GameFontNormal" virtual="true">
+        <Color r="0.30" g="0.78" b="1.00" a="1.0"/>
+    </FontString>
+
+    <FontString name="SRTMutedFontTemplate" inherits="GameFontNormalSmall" virtual="true">
+        <Color r="0.50" g="0.50" b="0.50" a="1.0"/>
+    </FontString>
+
+    <FontString name="SRTAccentFontTemplate" inherits="GameFontNormal" virtual="true">
+        <Color r="1.00" g="0.82" b="0.00" a="1.0"/>
+    </FontString>
+
+</Ui>

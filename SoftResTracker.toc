@@ -1,0 +1,9 @@
+## Interface: 30300
+## Title: SoftRes Tracker
+## Notes: Optimized Soft Reserve addon (3.3.5)
+## Version: 1.0
+## SavedVariables: SoftResTrackerDB
+## Author: headgrumble
+
+Templates.xml
+SoftResTracker.lua
