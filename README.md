@@ -14,7 +14,7 @@ Fully compatible with **RollFor** via a one-click export.
 - Whisper-based SR collection — raiders whisper you directly in-game
 - 1SR or 2SR mode — enforce per-player reservation limits
 - Multi-item whispers — a player can reserve multiple items in a single whisper
-- Duplicate protection — prevents the same player reserving the same item twice
+- Duplicate protection — prevents accidental duplicate reserving, requiring 2 whispers for a duplicate SR
 - Scrollable SR board with item icons, player names coloured by class, and per-item clear buttons
 - Missing SR tab — shows which raiders haven't used all their reservations
 - Announce Missing button — broadcasts missing SR players to raid warning
