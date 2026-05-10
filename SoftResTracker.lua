@@ -1,5 +1,5 @@
 -- SoftRes Tracker v1.0
--- Features: Whisper ?sr, 1SR/2SR limit, Multi-item whisper, Same-item multiple reservations,
+-- Features: Whisper -sr, 1SR/2SR limit, Multi-item whisper, Same-item multiple reservations,
 --           Unique player count, Drop-down reset, Item icons, Per-item clear buttons, Scrollable popups
 --
 -- UI redesigned with fresh layout and navy/steel-blue color scheme.
@@ -1596,13 +1596,16 @@ frame:SetScript("OnEvent", function(self, event, ...)
             elseif msg:lower():match("^%-mysr") then
                 local myItems = {}
                 for itemID, players in pairs(SoftResTrackerDB.reserves) do
+                    local count = 0
                     for _, p in ipairs(players) do
                         if p:lower() == name:lower() then
-                            local itemName, itemLink = GetItemInfo(itemID)
-                            local link = itemLink or itemName or ("Item "..itemID)
-                            table.insert(myItems, { id = itemID, link = link })
-                            break
+                            count = count + 1
                         end
+                    end
+                    if count > 0 then
+                        local itemName, itemLink = GetItemInfo(itemID)
+                        local link = itemLink or itemName or ("Item "..itemID)
+                        table.insert(myItems, { id = itemID, link = link, count = count })
                     end
                 end
                 local srCount   = GetPlayerSRCount(name)
@@ -1612,7 +1615,8 @@ frame:SetScript("OnEvent", function(self, event, ...)
                 else
                     SendChatMessage("Your SRs ("..remaining.." slots remaining):", "WHISPER", nil, name)
                     for _, item in ipairs(myItems) do
-                        SendChatMessage(item.link, "WHISPER", nil, name)
+                        local msg = item.count > 1 and (item.link .. " x" .. item.count) or item.link
+                        SendChatMessage(msg, "WHISPER", nil, name)
                     end
                 end
                 return
@@ -1666,18 +1670,11 @@ frame:SetScript("OnEvent", function(self, event, ...)
             if not seenInThisMsg[item.id] then
                 seenInThisMsg[item.id] = true
                 SoftResTrackerDB.reserves[item.id] = SoftResTrackerDB.reserves[item.id] or {}
-                -- Guard: player already has this exact item reserved
-                local alreadyHas = false
-                for _, p in ipairs(SoftResTrackerDB.reserves[item.id]) do
-                    if p:lower() == name:lower() then alreadyHas = true; break end
-                end
-                if not alreadyHas then
-                    table.insert(SoftResTrackerDB.reserves[item.id], name)
-                    table.insert(msgParts, item.link)
-                    table.insert(addedIDs, item.id)
-                    remaining  = remaining  - 1
-                    totalAdded = totalAdded + 1
-                end
+                table.insert(SoftResTrackerDB.reserves[item.id], name)
+                table.insert(msgParts, item.link)
+                table.insert(addedIDs, item.id)
+                remaining  = remaining  - 1
+                totalAdded = totalAdded + 1
             end
         end
 
