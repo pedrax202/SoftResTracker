@@ -49,22 +49,7 @@ Fully compatible with **RollFor** via a one-click export.
 
 Open the board by clicking the minimap button or typing `/srt toggle`.
 
-```
-┌──────────────────────────────────────┐
-│  SoftRes Tracker          [1SR][2SR][X] │  ← drag header to move
-├──────────────────────────────────────┤
-│ [Reserves] [Missing SR]   [Lock][Import]│  ← tabs and controls
-├──────────────────────────────────────┤
-│  🔍 Search...                    [X] │  ← filter by item or player name
-├──────────────────────────────────────┤
-│  [icon] Item Name          (2 res)   │
-│         Playerone  Playertwo    [✕]  │
-│  [icon] Another Item       (1 res)   │
-│         Playerthree             [✕]  │
-├──────────────────────────────────────┤
-│ [Loot] [How to SR]    [Reset]        │  ← footer actions
-└──────────────────────────────────────┘
-```
+<img width="433" height="552" alt="image" src="https://github.com/user-attachments/assets/cc691ef5-90a1-4e1b-84ab-5b80e4c2caca" />
 
 ### Reserves Tab
 Lists every item that has at least one reservation. Each row shows the item icon, item name, reservation count, and all players who reserved it with their names coloured by class. The **[✕]** button on each row clears all reservations for that item.
@@ -92,7 +77,7 @@ Lists every player currently in the raid (or party) who has not used all their a
 Raiders whisper the **loot master** directly. No website or external tool needed.
 
 ### `-sr [item link]`
-Reserve an item. The player shift-clicks the item in their bags, inventory, or a loot window to create the link, then types the command.
+Reserve an item. The player types the command "-SR" then shift-clicks the item from Atlasloot.
 
 ```
 -sr [Shadowmourne]
